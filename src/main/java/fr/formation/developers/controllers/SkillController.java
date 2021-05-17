@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.formation.developers.Domain.dtos.SkillCreate;
-import fr.formation.developers.Domain.dtos.SkillView;
+import fr.formation.developers.domain.dtos.SkillCreate;
+import fr.formation.developers.domain.dtos.SkillView;
 
 
 /**

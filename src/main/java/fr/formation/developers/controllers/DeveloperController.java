@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.formation.developers.Domain.dtos.DeveloperUpdate;
-import fr.formation.developers.Domain.dtos.DeveloperCreate;
+import fr.formation.developers.domain.dtos.DeveloperUpdate;
+import fr.formation.developers.domain.dtos.DeveloperCreate;
 
 import javax.validation.Valid;
 

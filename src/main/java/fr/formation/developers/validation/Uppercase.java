@@ -1,4 +1,4 @@
-package fr.formation.developers.Validation;
+package fr.formation.developers.validation;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

@@ -1,6 +1,6 @@
-package fr.formation.developers.Domain.dtos;
+package fr.formation.developers.domain.dtos;
 
-        import fr.formation.developers.Validation.Uppercase;
+        import fr.formation.developers.validation.Uppercase;
         import javax.validation.constraints.NotNull;
 
 /**

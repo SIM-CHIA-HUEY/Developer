@@ -1,4 +1,4 @@
-package fr.formation.developers.Domain.dtos;
+package fr.formation.developers.domain.dtos;
 
 import java.time.LocalDate;
 import javax.validation.constraints.NotNull;
