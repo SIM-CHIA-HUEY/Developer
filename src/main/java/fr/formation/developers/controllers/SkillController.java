@@ -2,6 +2,8 @@ package fr.formation.developers.controllers;
 
 import javax.validation.Valid;
 
+import fr.formation.developers.services.SkillService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,20 +53,26 @@ import fr.formation.developers.domain.dtos.SkillView;
  * identifiant est par définition unique et ce dans toute l'application, pas
  * uniquement dans un controller, d'où l'importance de la qualité du nommage et
  * de l'organisation du code.
+ *
+ * Mes notes : 1/ Dans le controller, on déclare les endpoints.
+ *  2/ @RequestMapping permet d'indiquer le segment de la collection de ressources
+ *  une seule fois pour la classe au lieu de le répéter à chaque mapping. Spring,
+ *  au démarrage, concatène le nom de la collection avec tous les mappings
+ *  déclarés dans le controller. Ex. : "/developers" + "/{pseudo}" =>
+ *  "/developers/{pseudo}"
  */
 @RestController
-/*
- * Mes notes : 1/ Dans le controller, on déclare les endpoints.
- * 2/ @RequestMapping permet d'indiquer le segment de la collection de ressources
- * une seule fois pour la classe au lieu de le répéter à chaque mapping. Spring,
- * au démarrage, concatène le nom de la collection avec tous les mappings
- * déclarés dans le controller. Ex. : "/developers" + "/{pseudo}" =>
- * "/developers/{pseudo}"
- */
-
 @RequestMapping("/skills")
 
 public class SkillController {
+
+    // (optionnel) @Autowired : c'est une annotation Spring, JEE : @Inject pour injecter le service dans le controller.
+    private final SkillService service ; // final -> pcq ça vient d'une abstract class, obligé qu'il soit FINAL !
+    // en-dessous : créer un constructeur pour assigner le variable 'service' pcq sinon le variable final en haut râle.
+    public SkillController (SkillService service){
+        this.service = service ;
+    }
+
     /**
      * Retourne la compétence dont l'identifant est "id". En Java nous déclarons
      * retourner un objet (instance) de type "Skill" mais Spring, en s'appuyant
@@ -86,9 +94,8 @@ public class SkillController {
      */
     @GetMapping("/{id}")
     public SkillView getById(@PathVariable("id") Long id) {
-        SkillView skill = new SkillView();
-        skill.setName("Spring boot " + id);
-        return skill;
+        System.out.println("call in service");
+        return service.getById(id);
     }
 
     /**
@@ -105,10 +112,12 @@ public class SkillController {
      *
      * @param skillCreate les données JSON reçues converties en une instance de
      *        "Skill"
+     *
+     *mes notes :
+     *     1/ Parenthèses optionnelles si pas de paramètres à une annotation
+     *     2/ Modifie partiellement une ressource type "Developer", ici unique
+     *     3/ @Valid : on a des inputs à valider donc il faut activer la validation pour la classe Skill.
      */
-    // Parenthèses optionnelles si pas de paramètres à une annotation
-    // mes notes : Modifie partiellement une ressource type "Developer", ici unique
-    // @Valid : on a des inputs à valider donc il faut activer la validation pour la classe Skill.
     @PostMapping
     public void create(@Valid @RequestBody SkillCreate skillCreate) {
         System.out.println(skillCreate);
