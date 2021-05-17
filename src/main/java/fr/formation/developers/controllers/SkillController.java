@@ -64,11 +64,22 @@ import fr.formation.developers.domain.dtos.SkillView;
 @RestController
 @RequestMapping("/skills")
 
+// serveur java : port 8080 ; serveur web : port 80.
+// les controllers ressemblent tous à ça, et les packages aussi (il manque juste celui du database)
+
 public class SkillController {
 
-    // (optionnel) @Autowired : c'est une annotation Spring, JEE : @Inject pour injecter le service dans le controller.
-    private final SkillService service ; // final -> pcq ça vient d'une abstract class, obligé qu'il soit FINAL !
-    // en-dessous : créer un constructeur pour assigner le variable 'service' pcq sinon le variable final en haut râle.
+    /**
+    @Autowired (optionnel)  :
+    c'est une annotation Spring, JEE : @Inject, pour injecter une instance de type service dans le controller. Mais
+    @Autowired est aussi utile pour injecter une class de repo dans le service.
+
+    Comme en-dessous, on instancie un nouveau SkillService qui s'appelle 'service' (, ss faire le NEW, oui c'est écrit différemment ici)
+    où on déclare une variable qui est FINAL (pcq ça vient d'une abstract class, alors obligé qu'il soit FINAL),
+    on doit créer un constructeur pour assigner le variable 'service' pcq sinon le variable final râle.
+     */
+    private final SkillService service ;
+
     public SkillController (SkillService service){
         this.service = service ;
     }
@@ -120,6 +131,7 @@ public class SkillController {
      */
     @PostMapping
     public void create(@Valid @RequestBody SkillCreate skillCreate) {
+        System.out.println("call in controller");
         System.out.println(skillCreate);
     }
 }
