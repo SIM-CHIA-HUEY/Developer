@@ -1,4 +1,4 @@
-package fr.formation.developers.Domain;
+package fr.formation.developers.Domain.dtos;
 
 public class TeamDelete {
 /*

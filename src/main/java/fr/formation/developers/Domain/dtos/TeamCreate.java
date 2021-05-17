@@ -1,4 +1,4 @@
-package fr.formation.developers.Domain;
+package fr.formation.developers.Domain.dtos;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;

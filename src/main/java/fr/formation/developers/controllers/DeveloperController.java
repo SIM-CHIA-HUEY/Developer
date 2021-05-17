@@ -10,20 +10,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.formation.developers.Domain.DeveloperUpdate;
-import fr.formation.developers.Domain.DeveloperCreate;
+import fr.formation.developers.Domain.dtos.DeveloperUpdate;
+import fr.formation.developers.Domain.dtos.DeveloperCreate;
 
 import javax.validation.Valid;
 
 @RestController
-/*
- * @RequestMapping permet d'indiquer le segment de la collection de ressources
- * une seule fois pour la classe au lieu de le répéter à chaque mapping. Spring,
- * au démarrage, concatène le nom de la collection avec tous les mappings
- * déclarés dans le controller. Ex. : "/developers" + "/{pseudo}" =>
- * "/developers/{pseudo}"
- */
 @RequestMapping("/developers")
+/*
+ Le @RequestMapping permet d'indiquer le segment de la collection de ressources une seule fois pour la classe
+ au lieu de le répéter à chaque mapping. Spring, au démarrage, concatène le nom de la collection avec tous les mappings
+ déclarés dans le controller. Ex. : "/developers" + "/{pseudo}" => "/developers/{pseudo}"
+ */
 
 public class DeveloperController {
 
@@ -72,6 +70,7 @@ public class DeveloperController {
     //dans les () du dessous c'est les arguments, là y'en a 2 et c'est ce que le framework va exécuter quand lancé
     public void updateBirthDate(@PathVariable("nom") String pseudo, //le pseudo (JAVA)/nom(url) lié à @PathVariable, vient pas d'une classe ou autre, mais de PatchMapping ici.
                                 @Valid  @RequestBody DeveloperUpdate partial) {
+        /*
         // @Valid : avant ligne 83 (avant d'exécuter la méthode), pour verif si le input est valide pr garantir que les données soient cohérentes dans l'application
         // @RequestBody : attend le body dans Postman. Object JAVA <-> JSON. Faut donc entrer les données dans Postman (ss format JSON, car c'est ce qu'on utilise)
         // pour qu'on le voit dans la console ici.
@@ -84,14 +83,19 @@ public class DeveloperController {
        // developer.setBirthDate(partial.getBirthDate()); // JSON
        // System.out.println("New object=" + developer);
 
+         */
+
         System.out.println("Update birth date of:" + pseudo +
                 " with new date :" + partial.getBirthDate());
     }
 
 }
 
-// Dans un controller on peut avoir plusieurs Request/Post/Patch(verbes) Mapping(contrat),
-// il faut juste que les url soient différents = URL unique pour chaque endpoint
-// et chaque endpoint = classe (classe des input)
+/*
+Dans un controller on peut avoir plusieurs Request/Post/Patch(verbes) Mapping(contrat),
+il faut juste que les url soient différents = URL unique pour chaque endpoint
+et chaque endpoint = classe (classe des input)
 
-// BUT des annotations Spring : VB + URL -> pour que le framework sache quelle méthode du JAVA exécuter
+BUT des annotations Spring : VB + URL -> pour que le framework sache quelle méthode du JAVA exécuter
+ */
+

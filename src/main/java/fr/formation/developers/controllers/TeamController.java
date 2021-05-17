@@ -1,7 +1,6 @@
 package fr.formation.developers.controllers;
 
-import fr.formation.developers.Domain.TeamCreate;
-import fr.formation.developers.Domain.TeamDelete;
+import fr.formation.developers.Domain.dtos.TeamCreate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

@@ -6,8 +6,10 @@ import javax.validation.ConstraintValidatorContext;
 // créer une classe UppercaseValidator ici à utiliser dans l'annotation 'Uppercase'.
 public class UppercaseValidator implements ConstraintValidator<Uppercase, String> { //implement l'interface ConstraintValidator
     @Override
-    public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
-        if(value == null){return true;}
+    public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) { //boolean que dans validateur
+        if (value == null) {
+            return true;
+        }
         String uppercased = value.toUpperCase();
         return value.equals(uppercased);
     }

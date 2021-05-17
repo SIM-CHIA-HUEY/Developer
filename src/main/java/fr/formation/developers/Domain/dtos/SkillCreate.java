@@ -1,4 +1,4 @@
-package fr.formation.developers.Domain;
+package fr.formation.developers.Domain.dtos;
 
         import fr.formation.developers.Validation.Uppercase;
         import javax.validation.constraints.NotNull;
@@ -11,9 +11,10 @@ package fr.formation.developers.Domain;
  * s'appuient dessus notamment pour réaliser les mappings (par ex. JSON => objet
  * Java et inversement).
  */
-public class Skill {
 
-    @Uppercase()
+public class SkillCreate {
+
+    @Uppercase // -> une contrainte de validation
     @NotNull
     private String name; // Variable d'instance private
     // Construit un nouvel objet (instance) de type "Skill".
@@ -21,7 +22,7 @@ public class Skill {
     /**
      * Construit un nouvel objet (instance) de type "Skill".
      */
-    public Skill() {
+    public SkillCreate() {
         // Constructeur public et sans argument
     }
 

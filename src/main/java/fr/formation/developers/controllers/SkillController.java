@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.formation.developers.Domain.Skill;
+import fr.formation.developers.Domain.dtos.SkillCreate;
+import fr.formation.developers.Domain.dtos.SkillView;
+
 
 /**
  * Une classe qui expose un ensemble de ressources de type "Skill". Le terme
@@ -52,12 +54,14 @@ import fr.formation.developers.Domain.Skill;
  */
 @RestController
 /*
- * Mes notes : @RequestMapping permet d'indiquer le segment de la collection de ressources
+ * Mes notes : 1/ Dans le controller, on déclare les endpoints.
+ * 2/ @RequestMapping permet d'indiquer le segment de la collection de ressources
  * une seule fois pour la classe au lieu de le répéter à chaque mapping. Spring,
  * au démarrage, concatène le nom de la collection avec tous les mappings
  * déclarés dans le controller. Ex. : "/developers" + "/{pseudo}" =>
  * "/developers/{pseudo}"
  */
+
 @RequestMapping("/skills")
 
 public class SkillController {
@@ -81,8 +85,8 @@ public class SkillController {
      * @return la compétence dont l'identifiant est "id"
      */
     @GetMapping("/{id}")
-    public Skill getById(@PathVariable("id") Long id) {
-        Skill skill = new Skill();
+    public SkillView getById(@PathVariable("id") Long id) {
+        SkillView skill = new SkillView();
         skill.setName("Spring boot " + id);
         return skill;
     }
@@ -99,13 +103,14 @@ public class SkillController {
      * Elle indique à Spring que les données à mapper avec l'objet se trouve
      * dans le corps de la requête et pas ailleurs.
      *
-     * @param skill les données JSON reçues converties en une instance de
+     * @param skillCreate les données JSON reçues converties en une instance de
      *        "Skill"
      */
     // Parenthèses optionnelles si pas de paramètres à une annotation
     // mes notes : Modifie partiellement une ressource type "Developer", ici unique
+    // @Valid : on a des inputs à valider donc il faut activer la validation pour la classe Skill.
     @PostMapping
-    public void create(@Valid @RequestBody Skill skill) {
-        System.out.println(skill);
+    public void create(@Valid @RequestBody SkillCreate skillCreate) {
+        System.out.println(skillCreate);
     }
 }

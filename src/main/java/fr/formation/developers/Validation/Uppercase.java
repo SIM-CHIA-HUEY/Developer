@@ -14,7 +14,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
   // @Constraint = ici, sa contrainte de validation est UpperCaseValidator.
 
 public @interface Uppercase {
-    String message () default "Doit être en majuscule";
+    String message () default "Doit être en majuscule"; // le message d'alerte
     Class<?> [] groups () default {}; // = marche sur array/string/payload(qui est déclaré en bas, obligatoirement)
     Class<? extends Payload>[] payload() default {};
 }
