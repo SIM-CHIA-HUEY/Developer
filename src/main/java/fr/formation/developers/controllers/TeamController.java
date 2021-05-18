@@ -59,13 +59,12 @@ public class TeamController {
 
     @DeleteMapping ("/{name}")
     public void deleteTeam (@PathVariable ("name") String name) {
-        // to test if it works : System.out.println("blabla");
-        TeamCreate team1 = new TeamCreate("bye", true);
-        // to test if it works : System.out.println(team1);
-        if (team1.getTeamName().equals(name)){ // getter = obtenir le type du champs/valeur de l'objet (ici : en string) => string = string : OK
-            System.out.println(team1);
+        TeamCreate team = new TeamCreate("Sunshine", true);
+
+        if (team.getTeamName().equals(name)){ // getter = obtenir le type du champs/valeur de l'objet (ici : en string) => string = string : OK
+            System.out.println("You successfully deleted : " + team);
         } else {
-            System.out.println("Didn't work.");
+            System.out.println("Delete operation failed.");
         }
     }
 
