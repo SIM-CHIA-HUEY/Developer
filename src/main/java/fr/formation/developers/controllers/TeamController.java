@@ -56,7 +56,7 @@ public class TeamController {
                             @Valid @RequestBody TeamCreate teamCreate){
         System.out.println(name + teamCreate);
     }
-/*
+
     @DeleteMapping ("/{name}")
     public void deleteTeam (@PathVariable ("name") String name) {
         // to test if it works : System.out.println("blabla");
@@ -69,5 +69,5 @@ public class TeamController {
         }
     }
 
- */
+
 }
