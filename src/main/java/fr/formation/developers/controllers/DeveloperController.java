@@ -1,7 +1,5 @@
 package fr.formation.developers.controllers;
 
-import java.time.LocalDate;
-
 import fr.formation.developers.domain.dtos.DeveloperView;
 import fr.formation.developers.services.DeveloperService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,8 +35,8 @@ public class DeveloperController {
         System.out.println("call in controller for GET");
         System.out.println(pseudo);
 
-        return service.getByPseudo (pseudo); // PB : les autres infos (name, date..) ne se montrent pas.
-
+        return service.getByPseudo (pseudo); // getByPseudo : méthode que j'ai déjà, donc que je veux dans return de mon service
+        // return = ma fonction est terminée
     }
 
     // Parenthèses optionnelles si pas de paramètres à une annotation
@@ -75,23 +73,8 @@ public class DeveloperController {
     //dans les () du dessous c'est les arguments, là y'en a 2 et c'est ce que le framework va exécuter quand lancé
     public void updateBirthDate(@PathVariable("nom") String pseudo, //le pseudo (JAVA)/nom(url) lié à @PathVariable, vient pas d'une classe ou autre, mais de PatchMapping ici.
                                 @Valid  @RequestBody DeveloperUpdate partial) {
-        /**
-         * @Valid : avant ligne 83 (avant d'exécuter la méthode), pour verif si le input est valide pr garantir que les données soient cohérentes dans l'application
-         *         // @RequestBody : attend le body dans Postman. Object JAVA <-> JSON. Faut donc entrer les données dans Postman (ss format JSON, car c'est ce qu'on utilise)
-         *         // pour qu'on le voit dans la console ici.
-         *
-         *        // System.out.println("Partial object=" + partial);
-         *        // DeveloperCreate developer = new DeveloperCreate();
-         *        // developer.setPseudo(pseudo); // Variable de chemin
-         *        // developer.setFirstName(partial.getFirstName()); // Anomalie
-         *        // developer.setLastName("MARSHALL");
-         *        // developer.setBirthDate(partial.getBirthDate()); // JSON
-         *        // System.out.println("New object=" + developer);
-         */
-
-        System.out.println(pseudo, partial.getBirthDate());
+        service.updateBirthDate(pseudo, partial);
     }
-
 }
 
 /*

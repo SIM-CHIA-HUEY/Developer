@@ -17,11 +17,12 @@ public class CustomControllerAdvise extends ResponseEntityExceptionHandler {
 //extends + @override : on va redefinir cette methode 'handleMethod...' qui était par défaut
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid
-            (MethodArgumentNotValidException ex, HttpHeaders headers,
-            HttpStatus status, WebRequest request) {
+            (MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+
         HttpStatus badRequest = HttpStatus.BAD_REQUEST;
         List<ObjectError> errors = ex.getAllErrors();
         return handleExceptionInternal(ex,errors,headers,badRequest,request);
+
     }
 }
 
