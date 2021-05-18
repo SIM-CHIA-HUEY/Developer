@@ -2,6 +2,8 @@ package fr.formation.developers.controllers;
 
 import java.time.LocalDate;
 
+import fr.formation.developers.domain.dtos.DeveloperView;
+import fr.formation.developers.services.DeveloperService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,30 +19,33 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/developers")
-/*
- Le @RequestMapping permet d'indiquer le segment de la collection de ressources une seule fois pour la classe
- au lieu de le répéter à chaque mapping. Spring, au démarrage, concatène le nom de la collection avec tous les mappings
- déclarés dans le controller. Ex. : "/developers" + "/{pseudo}" => "/developers/{pseudo}"
- */
+/**
+ * Le @RequestMapping permet d'indiquer le segment de la collection de ressources une seule fois pour la classe
+ *  au lieu de le répéter à chaque mapping. Spring, au démarrage, concatène le nom de la collection avec tous les mappings
+ *  déclarés dans le controller. Ex. : "/developers" + "/{pseudo}" => "/developers/{pseudo}"
+*/
 
 public class DeveloperController {
 
+    private final DeveloperService service ;
+    public DeveloperController (DeveloperService service){
+        this.service = service ;
+    }
+
     @GetMapping("/{pseudo}")
-    public DeveloperCreate getByPseudo(@PathVariable("pseudo") String pseudo) {
-        DeveloperCreate developer = new DeveloperCreate();
-        developer.setPseudo(pseudo); //pseudo ici tu écris ce que tu veux dans URL à la place de {pseudo}, et apparaîtra comme écrit dans Postman
-        developer.setFirstName("Frank");
-        developer.setLastName("MARSHALL");
-        LocalDate date = LocalDate.of(1974, 12, 26);
-        developer.setBirthDate(date);
-        System.out.println(developer);
-        return developer;
+    public DeveloperView getByPseudo(@PathVariable("pseudo") String pseudo) {
+        System.out.println("call in controller for GET");
+        System.out.println(pseudo);
+
+        return service.getByPseudo (pseudo); // PB : les autres infos (name, date..) ne se montrent pas.
+
     }
 
     // Parenthèses optionnelles si pas de paramètres à une annotation
     @PostMapping
-    public void create(@RequestBody DeveloperCreate developer) {
-        System.out.println(developer);
+    public void create(@Valid @RequestBody DeveloperCreate developerCreate) {
+        System.out.println("call in controller for POST");
+        System.out.println(developerCreate);
     }
 
     /**
@@ -65,28 +70,26 @@ public class DeveloperController {
      * @param pseudo le pseudo identifiant une ressource "Developer"
      * @param partial les données partielles d'une ressource "Developer"
      */
-    // method rien a voir avec les autres
-    @PatchMapping("/{nom}/birth-date")
+
+    @PatchMapping("/{nom}/birthDate")
     //dans les () du dessous c'est les arguments, là y'en a 2 et c'est ce que le framework va exécuter quand lancé
     public void updateBirthDate(@PathVariable("nom") String pseudo, //le pseudo (JAVA)/nom(url) lié à @PathVariable, vient pas d'une classe ou autre, mais de PatchMapping ici.
                                 @Valid  @RequestBody DeveloperUpdate partial) {
-        /*
-        // @Valid : avant ligne 83 (avant d'exécuter la méthode), pour verif si le input est valide pr garantir que les données soient cohérentes dans l'application
-        // @RequestBody : attend le body dans Postman. Object JAVA <-> JSON. Faut donc entrer les données dans Postman (ss format JSON, car c'est ce qu'on utilise)
-        // pour qu'on le voit dans la console ici.
-
-       // System.out.println("Partial object=" + partial);
-       // DeveloperCreate developer = new DeveloperCreate();
-       // developer.setPseudo(pseudo); // Variable de chemin
-       // developer.setFirstName(partial.getFirstName()); // Anomalie
-       // developer.setLastName("MARSHALL");
-       // developer.setBirthDate(partial.getBirthDate()); // JSON
-       // System.out.println("New object=" + developer);
-
+        /**
+         * @Valid : avant ligne 83 (avant d'exécuter la méthode), pour verif si le input est valide pr garantir que les données soient cohérentes dans l'application
+         *         // @RequestBody : attend le body dans Postman. Object JAVA <-> JSON. Faut donc entrer les données dans Postman (ss format JSON, car c'est ce qu'on utilise)
+         *         // pour qu'on le voit dans la console ici.
+         *
+         *        // System.out.println("Partial object=" + partial);
+         *        // DeveloperCreate developer = new DeveloperCreate();
+         *        // developer.setPseudo(pseudo); // Variable de chemin
+         *        // developer.setFirstName(partial.getFirstName()); // Anomalie
+         *        // developer.setLastName("MARSHALL");
+         *        // developer.setBirthDate(partial.getBirthDate()); // JSON
+         *        // System.out.println("New object=" + developer);
          */
 
-        System.out.println("Update birth date of:" + pseudo +
-                " with new date :" + partial.getBirthDate());
+        System.out.println(pseudo, partial.getBirthDate());
     }
 
 }

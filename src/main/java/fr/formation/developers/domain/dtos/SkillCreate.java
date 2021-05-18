@@ -17,7 +17,6 @@ public class SkillCreate {
     @Uppercase // -> une contrainte de validation
     @NotNull
     private String name; // Variable d'instance private
-    // Construit un nouvel objet (instance) de type "Skill".
 
     /**
      * Construit un nouvel objet (instance) de type "Skill".
@@ -27,7 +26,7 @@ public class SkillCreate {
     }
 
     /**
-     * Retourbe le nom de la compétence.
+     * Retourne le nom de la compétence.
      *
      * @return le nom
      */

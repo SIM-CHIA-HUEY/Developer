@@ -18,14 +18,14 @@ import fr.formation.developers.domain.dtos.SkillView;
 /**
  * Une classe qui expose un ensemble de ressources de type "Skill". Le terme
  * "ressources" est utilisé dans un contexte d'API Rest car un "serveur de
- * ressources" de met pas à disposition uniquement des données stockées dans une
+ * ressources" ne met pas à disposition uniquement des données stockées dans une
  * base. Les ressources peuvent être des données calculées sans accéder à une
  * base, des fichiers stockés sur disque ou encore des données qui proviennent
  * d'autres API. C'est donc un terme plus large pour désigner les informations
  * misent à disposition aux clients de l'API.
  * <p>
  * Pour indiquer à Spring que cette classe contient des déclarations de
- * "endpoints" il faut l'annoter "@RestController". En cas d'oublie et si la
+ * "endpoints" il faut l'annoter "@RestController". En cas d'oubli et si la
  * classe n'est même pas du tout annotée avec une annotation Spring, la classe
  * sera ignorée lors du scan des packages au démarrage.
  * <p>
@@ -79,7 +79,6 @@ public class SkillController {
     on doit créer un constructeur pour assigner le variable 'service' pcq sinon le variable final râle.
      */
     private final SkillService service ;
-
     public SkillController (SkillService service){
         this.service = service ;
     }
@@ -107,6 +106,7 @@ public class SkillController {
     public SkillView getById(@PathVariable("id") Long id) {
         System.out.println("call in service");
         return service.getById(id);
+
     }
 
     /**
@@ -124,7 +124,7 @@ public class SkillController {
      * @param skillCreate les données JSON reçues converties en une instance de
      *        "Skill"
      *
-     *mes notes :
+     * mes notes :
      *     1/ Parenthèses optionnelles si pas de paramètres à une annotation
      *     2/ Modifie partiellement une ressource type "Developer", ici unique
      *     3/ @Valid : on a des inputs à valider donc il faut activer la validation pour la classe Skill.
