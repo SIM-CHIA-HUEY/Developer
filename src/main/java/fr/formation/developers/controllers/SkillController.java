@@ -79,6 +79,7 @@ public class SkillController {
     on doit créer un constructeur pour assigner le variable 'service' pcq sinon le variable final râle.
      */
     private final SkillService service ;
+
     public SkillController (SkillService service){
         this.service = service ;
     }
@@ -121,7 +122,7 @@ public class SkillController {
      * Elle indique à Spring que les données à mapper avec l'objet se trouve
      * dans le corps de la requête et pas ailleurs.
      *
-     * @param skillCreate les données JSON reçues converties en une instance de
+     * @param dto les données JSON reçues converties en une instance de
      *        "Skill"
      *
      * mes notes :
@@ -129,9 +130,17 @@ public class SkillController {
      *     2/ Modifie partiellement une ressource type "Developer", ici unique
      *     3/ @Valid : on a des inputs à valider donc il faut activer la validation pour la classe Skill.
      */
-    @PostMapping
-    public void create(@Valid @RequestBody SkillCreate skillCreate) {
-        System.out.println("call in controller");
-        System.out.println(skillCreate);
+    @PostMapping //c'est un endpoint
+    public void create(@Valid @RequestBody SkillCreate dto) {
+        service.create(dto);
+        // tous les input qui viennent de l'interface doit s'apeler dto, car le controller ne référence
+        // que les dto.
+    }
+
+    @GetMapping("/{name}/by-name") //for or by-name : c'est pour enlever l'ambiguïté ; dans Postman mettre input existant dans le {name}.
+    public SkillView getByName (@PathVariable ("name") String name){
+        return service.getByName(name);
+
+        //一 ici getByName quand tu le mets, il râle -> laisse la machine implémenter la méthode ...
     }
 }

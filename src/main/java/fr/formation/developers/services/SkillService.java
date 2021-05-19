@@ -18,6 +18,6 @@ public interface SkillService {
 
     void create (SkillCreate skill);
 
-
-
+    SkillView getByName(String name);
+    //二 ...laisse la machine implémenter la méthode ici puis ...
 }
