@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface SkillRepository extends JpaRepository <Skill, Long> {
     Optional<Skill> findByName(String name);
     // 四 ..ici il implimentera ça mais attention, il faut faire les changements adéquates !
+
+
 }

@@ -12,6 +12,7 @@ public class SkillServiceImpl implements SkillService {
 
     private final SkillRepository repository ;
 
+    // injection du repository par constructeur
     public SkillServiceImpl (SkillRepository repository){
         this.repository = repository ;
     }
