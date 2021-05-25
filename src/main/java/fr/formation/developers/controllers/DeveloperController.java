@@ -17,14 +17,13 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/developers")
-/**
- * Le @RequestMapping permet d'indiquer le segment de la collection de ressources une seule fois pour la classe
- *  au lieu de le répéter à chaque mapping. Spring, au démarrage, concatène le nom de la collection avec tous les mappings
- *  déclarés dans le controller. Ex. : "/developers" + "/{pseudo}" => "/developers/{pseudo}"
-*/
 
 public class DeveloperController {
-
+    /**
+     * Le @RequestMapping permet d'indiquer le segment de la collection de ressources une seule fois pour la classe
+     *  au lieu de le répéter à chaque mapping. Spring, au démarrage, concatène le nom de la collection avec tous les mappings
+     *  déclarés dans le controller. Ex. : "/developers" + "/{pseudo}" => "/developers/{pseudo}"
+     */
     private final DeveloperService service ;
     public DeveloperController (DeveloperService service){
         this.service = service ;
@@ -32,18 +31,14 @@ public class DeveloperController {
 
     @GetMapping("/{pseudo}")
     public DeveloperView getByPseudo(@PathVariable("pseudo") String pseudo) {
-        System.out.println("call in controller for GET");
         System.out.println(pseudo);
-
         return service.getByPseudo (pseudo); // getByPseudo : méthode que j'ai déjà, donc que je veux dans return de mon service
         // return = ma fonction est terminée
     }
 
-    // Parenthèses optionnelles si pas de paramètres à une annotation
     @PostMapping
-    public void create(@Valid @RequestBody DeveloperCreate developerCreate) {
-        System.out.println("call in controller for POST");
-        System.out.println(developerCreate);
+    public void create(@Valid @RequestBody DeveloperCreate dto) {
+        service.create(dto);
     }
 
     /**
@@ -68,12 +63,16 @@ public class DeveloperController {
      * @param pseudo le pseudo identifiant une ressource "Developer"
      * @param partial les données partielles d'une ressource "Developer"
      */
-
-    @PatchMapping("/{nom}/birthDate")
+    @PatchMapping("/{pseudo}/birthDate")
     //dans les () du dessous c'est les arguments, là y'en a 2 et c'est ce que le framework va exécuter quand lancé
-    public void updateBirthDate(@PathVariable("nom") String pseudo, //le pseudo (JAVA)/nom(url) lié à @PathVariable, vient pas d'une classe ou autre, mais de PatchMapping ici.
+    public void updateBirthDate(@PathVariable("pseudo") String pseudo, //le pseudo (JAVA)/nom(url) lié à @PathVariable, vient pas d'une classe ou autre, mais de PatchMapping ici.
                                 @Valid  @RequestBody DeveloperUpdate partial) {
         service.updateBirthDate(pseudo, partial);
+    }
+
+    @GetMapping("/find") //chercher le tableau avec
+    public DeveloperView find (){
+        return service.find();
     }
 }
 

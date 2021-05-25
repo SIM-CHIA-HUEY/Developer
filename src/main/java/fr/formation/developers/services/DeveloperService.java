@@ -5,8 +5,6 @@ import fr.formation.developers.domain.dtos.DeveloperUpdate;
 import fr.formation.developers.domain.dtos.DeveloperView;
 
 
-import javax.validation.Valid;
-
 public interface DeveloperService {
 
     DeveloperView getByPseudo (String pseudo);
@@ -14,4 +12,6 @@ public interface DeveloperService {
     void create (DeveloperCreate developer);
 
     void updateBirthDate(String pseudo, DeveloperUpdate partial);
+
+    DeveloperView find();
 }
