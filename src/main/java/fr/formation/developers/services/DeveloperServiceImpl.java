@@ -4,7 +4,9 @@ import fr.formation.developers.domain.dtos.DeveloperCreate;
 import fr.formation.developers.domain.dtos.DeveloperUpdate;
 import fr.formation.developers.domain.dtos.DeveloperView;
 import fr.formation.developers.domain.entities.Developer;
+import fr.formation.developers.domain.entities.Skill;
 import fr.formation.developers.repositories.DeveloperRepository;
+import fr.formation.developers.repositories.SkillRepository;
 import org.springframework.stereotype.Service;
 
 //import javax.validation.Valid;
@@ -13,15 +15,17 @@ import org.springframework.stereotype.Service;
 public class DeveloperServiceImpl implements DeveloperService {
 // ici on crée la classe concrète où on met tout
 
-    private final DeveloperRepository repository ;
+    private final DeveloperRepository developerRepo;
+    private final SkillRepository skillRepo ;
 
-    public DeveloperServiceImpl (DeveloperRepository repository){
-        this.repository = repository ;
+    public DeveloperServiceImpl (DeveloperRepository developerRepo, SkillRepository skillRepo){
+        this.developerRepo = developerRepo;
+        this.skillRepo = skillRepo;
     }
 
     @Override
     public DeveloperView getByPseudo(String pseudo){
-        Developer entity = repository.findByPseudo(pseudo).get();
+        Developer entity = developerRepo.findByPseudo(pseudo).get();
         DeveloperView view = new DeveloperView();
         view.setPseudo(entity.getPseudo());
         view.setFirstName(entity.getFirstName());
@@ -39,7 +43,13 @@ public class DeveloperServiceImpl implements DeveloperService {
         entity.setFirstName(dto.getFirstName());
         entity.setLastName(dto.getLastName());
         entity.setBirthDate(dto.getBirthDate());
-        repository.save(entity);
+        Long mainSkillId = dto.getMainSkillId();
+        // 2 possibilités pour une association avec un objet préexistant :
+        // Skill skill = skillRepo.findById(mainSkillId).get(); // 1.faire appel à la BD avec find, dc vérifie si ressource existe ;
+        Skill skill = skillRepo.getOne(mainSkillId); // 2.ne fait pas appel à la DB, juste mettre l'ID, dc pas de vérification,
+                                                    // dc erreur si Validations et relations pas bien fait ds le back. Mais meilleure perf !
+        entity.setMainSkill(skill);
+        developerRepo.save(entity);
     }
 
     @Override
@@ -57,15 +67,15 @@ public class DeveloperServiceImpl implements DeveloperService {
          *        // developer.setBirthDate(partial.getBirthDate()); // JSON
          *        // System.out.println("New object=" + developer);
          */
-        Developer entity = repository.findByPseudo(pseudo).get();
+        Developer entity = developerRepo.findByPseudo(pseudo).get();
         entity.setBirthDate(dto.getBirthDate());
-        repository.save(entity);
+        developerRepo.save(entity);
         //System.out.println("Update birth date of:" + pseudo + " with new date :" + dto.getBirthDate());
     }
 
     @Override
     public DeveloperView find() {
-        Developer entity = repository.findByFirstNameAndLastName("SIM", "Chia Huey").get();
+        Developer entity = developerRepo.findByFirstNameAndLastName("SIM", "Chia Huey").get();
         DeveloperView viewTwo = new DeveloperView();
         viewTwo.setPseudo(entity.getPseudo());
         viewTwo.setFirstName(entity.getFirstName());

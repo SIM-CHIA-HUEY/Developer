@@ -8,6 +8,7 @@ public class DeveloperCreate {
     @NotNull private String firstName;
     @NotNull private String lastName;
     @NotNull private LocalDate birthDate;
+    @NotNull private Long mainSkillId;
 
     public DeveloperCreate() {}
 
@@ -25,9 +26,16 @@ public class DeveloperCreate {
         this.birthDate = birthDate;
     }
 
+    public Long getMainSkillId() {
+        return mainSkillId;
+    }
+    public void setMainSkillId(Long mainSkillId) {
+        this.mainSkillId = mainSkillId;
+    }
+
     @Override
     public String toString() {
         return "Developer [pseudo=" + pseudo + ", firstName=" + firstName
-                + ", lastName=" + lastName + ", birthDate=" + birthDate + "]";
+                + ", lastName=" + lastName + ", birthDate=" + birthDate + ", mainSkillId=" + mainSkillId + "]";
     }
 }
